@@ -25,7 +25,7 @@ public class SecurityConfig {
 
                 // 2) Which URLs to allow without login
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/signup").permitAll()   // public
+                        .requestMatchers("/auth/signup", "/auth/login", "auth/profileData").permitAll()   // public
                         .anyRequest().authenticated()                  // everything else needs auth
                 )
 
