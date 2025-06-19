@@ -24,7 +24,6 @@ public class JwtTokenUtil {
 
     private Key signingKey;
 
-
     @PostConstruct
     public void init() {
         // remove decoding

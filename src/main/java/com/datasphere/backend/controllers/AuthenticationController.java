@@ -88,7 +88,6 @@ public class AuthenticationController {
                 return ResponseEntity.status(401).body(Map.of("error", "Missing or invalid Authorization header"));
             }
 
-            System.out.println("authHeader:  "+ authHeader);
 
             String token = authHeader.substring(7); // remove "Bearer "
             String email = jwtTokenUtil.extractUserEmail(token);

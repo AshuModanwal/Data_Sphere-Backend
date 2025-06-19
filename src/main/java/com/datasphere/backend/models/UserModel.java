@@ -1,9 +1,11 @@
 package com.datasphere.backend.models;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Indexed;
 
 
-@Entity
+@Entity(name="users")
+//@Indexed(index="users")
 public class UserModel {
 
     @Id
