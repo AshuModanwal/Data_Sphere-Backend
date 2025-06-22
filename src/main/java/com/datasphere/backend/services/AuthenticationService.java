@@ -1,8 +1,8 @@
 package com.datasphere.backend.services;
 
 import com.datasphere.backend.dtos.LoginUserDto;
-import com.datasphere.backend.dtos.SignupUserDto;
-import com.datasphere.backend.models.UserModel;
+import com.datasphere.backend.dtos.UserDto;
+import com.datasphere.backend.models.User;
 
 public interface AuthenticationService {
     /**
@@ -10,11 +10,11 @@ public interface AuthenticationService {
      * @param dto incoming signup data
      * @return the saved UserModel
      */
-    UserModel registerNewUser(SignupUserDto dto);
+    User registerNewUser(UserDto dto);
 
-    UserModel authenticateUser(LoginUserDto dto);
+    User authenticateUser(LoginUserDto dto);
 
-    UserModel getProfileData(String email);
+    User getProfileData(String email);
 }
 
 

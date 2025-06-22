@@ -1,8 +1,8 @@
 package com.datasphere.backend.services.impl;
 
 import com.datasphere.backend.dtos.LoginUserDto;
-import com.datasphere.backend.dtos.SignupUserDto;
-import com.datasphere.backend.models.UserModel;
+import com.datasphere.backend.dtos.UserDto;
+import com.datasphere.backend.models.User;
 import com.datasphere.backend.repositories.UserRepository;
 import com.datasphere.backend.services.AuthenticationService;
 import jakarta.transaction.Transactional;
@@ -25,7 +25,7 @@ public class AuthenticationImpl implements AuthenticationService {
     }
 
     @Override
-    public UserModel registerNewUser(SignupUserDto dto){
+    public User registerNewUser(UserDto dto){
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException("Email already in use");
         }
@@ -33,7 +33,7 @@ public class AuthenticationImpl implements AuthenticationService {
             throw new IllegalArgumentException("Username already taken");
         }
 
-        UserModel user = new UserModel();
+        User user = new User();
         user.setUserName(dto.getUserName());
         user.setEmail(dto.getEmail());
         user.setCompany(dto.getCompany());
@@ -43,11 +43,11 @@ public class AuthenticationImpl implements AuthenticationService {
     }
 
     @Override
-    public UserModel authenticateUser(LoginUserDto dto){
+    public User authenticateUser(LoginUserDto dto){
         String email = dto.getEmail();
         String password = dto.getPassword();
 
-        UserModel user = userRepository.findByEmail(email)
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if(!passwordEncoder.matches(password, user.getPassword())){
@@ -60,7 +60,7 @@ public class AuthenticationImpl implements AuthenticationService {
     }
 
     @Override
-    public UserModel getProfileData(String email) {
+    public User getProfileData(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }

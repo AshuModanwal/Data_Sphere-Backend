@@ -1,10 +1,9 @@
 package com.datasphere.backend.utils;
 
-import com.datasphere.backend.models.UserModel;
+import com.datasphere.backend.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +29,7 @@ public class JwtTokenUtil {
         signingKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
-    public String generateJwtToken(UserModel user) {
+    public String generateJwtToken(User user) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpiration);
 
@@ -46,7 +45,7 @@ public class JwtTokenUtil {
         return extractAllClaims(token).getSubject();
     }
 
-    public boolean validateToken(String token, UserModel user) {
+    public boolean validateToken(String token, User user) {
         final String email = extractUserEmail(token);
         return email.equals(user.getEmail()) && !isTokenExpired(token);
     }

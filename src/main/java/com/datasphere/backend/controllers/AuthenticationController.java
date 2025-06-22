@@ -1,8 +1,8 @@
 package com.datasphere.backend.controllers;
 
-import com.datasphere.backend.dtos.SignupUserDto;
+import com.datasphere.backend.dtos.UserDto;
 import com.datasphere.backend.dtos.LoginUserDto;
-import com.datasphere.backend.models.UserModel;
+import com.datasphere.backend.models.User;
 import com.datasphere.backend.services.AuthenticationService;
 
 import com.datasphere.backend.utils.JwtTokenUtil;
@@ -27,7 +27,7 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(
-            @Valid @RequestBody SignupUserDto signupUserDto,
+            @Valid @RequestBody UserDto userDto,
             BindingResult br                            // << correct type
     ) {
         if (br.hasErrors()) {
@@ -40,7 +40,7 @@ public class AuthenticationController {
                     .body(errors);
         }
 
-        UserModel created = authenticationService.registerNewUser(signupUserDto);
+        User created = authenticationService.registerNewUser(userDto);
         return ResponseEntity
                 .ok("User registered with ID: " + created.getId());
     }
@@ -62,7 +62,7 @@ public class AuthenticationController {
         }
 
         try {
-            UserModel user = authenticationService.authenticateUser(loginUserDto);
+            User user = authenticationService.authenticateUser(loginUserDto);
 
             String token  = jwtTokenUtil.generateJwtToken(user);
             return ResponseEntity.ok().body(
@@ -92,7 +92,7 @@ public class AuthenticationController {
             String token = authHeader.substring(7); // remove "Bearer "
             String email = jwtTokenUtil.extractUserEmail(token);
 
-            UserModel user = authenticationService.getProfileData(email);
+            User user = authenticationService.getProfileData(email);
 
             if (user == null) {
                 return ResponseEntity.status(404).body(Map.of("error", "User not found"));

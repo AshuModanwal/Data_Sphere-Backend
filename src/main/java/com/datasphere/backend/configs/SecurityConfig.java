@@ -52,8 +52,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/auth/signup",
-//                                "/auth/login",
-                                "/auth/profileData"
+                                "/auth/profileData",
+                                "/posts/createPost"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
